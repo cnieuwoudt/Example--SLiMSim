@@ -1,5 +1,5 @@
-// The following file is used to simulate genomic 
-// data using SLiM 3.0 (Haller and Messer 2019).
+// The following file was used to simulate "example_SLIMout.txt"
+// using SLiM 3.0 (Haller and Messer 2019).
 
 // set up a simple neutral simulation 
 // For additional details regarding SLiM simulations please refer to the 
