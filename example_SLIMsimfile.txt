@@ -1,38 +1,46 @@
-// set up a simple neutral simulation (see page 45 of manual)
+// The following file is used to simulate genomic 
+// data using SLiM 3.0 (Haller and Messer 2019).
+
+// set up a simple neutral simulation 
+// For additional details regarding SLiM simulations please refer to the 
+// SLiM manual, which is freely-available at https://messerlab.org/slim/.
 initialize() {
     //---------------//
 	// Mutation Rate //
 	//---------------//        
-	//initialize the per-site per-generation mutation rate
+	// set the per-site per-generation mutation rate to 1e-08 
         initializeMutationRate(1e-8);
                 
 	//------------------//
 	// Mutation Type(s) //
 	//------------------//        
-	// If you had different mutation types you would create
-	// multiple mutation types.  However,
-	// since this is a simple simulation with neutral mutations 		
-	//only, we only need the following line which creates a 		
-	//neutral mutation type named "m1"
+	// Initialize the mutation type.  Note when simulating data with 
+	// multiple mutation types users will need to initialize each mutation
+	// type separately.  However, since this is a simple simulation, we only 
+	// initialize one mutation type, named "m1".
+	// For additional information on mutation types please refer to the SLiM manual.
         // m1 mutation type: neutral
         initializeMutationType("m1", 0.5, "f", 0.0);
 
 	//-------------------------//
 	// Genomic Element Type(s) //
 	//-------------------------//
-	// Again, since you want a simple simulation
-	// with one mutation type you only need one type of
-	// genomic element.
-    // g1 genomic element type: uses m1 for all mutations
+	// Initialize the genomic element type.  Note if simulating regions with 
+	// different mutation types users must initialize each unique genomic element
+	// type separately. However, since this is a simple simulation with only
+	// one type of mutation, we only initialize one genomic element type, named "g1".
+	// For additional information on genomic element types please refer to the SLiM manual.
+		// g1 genomic element type: uses m1 for all mutations
         initializeGenomicElementType("g1", m1, 1.0);
         
 	//-----------------//
 	// Genomic Element //
 	//-----------------//        
-    // HERE IS WHERE YOU SPECIFY THE LENGTH OF THE 
-	// SEGMENT TO SIMULATE, note that in Edios arrays start
-	// at position 0, so subtract one from the total length    
-	// uniform chromosome of length 10000 kb - specify 99999 
+    // Initialize the genomic element.  Here we specify the length of each 
+	// genomic region to simulate.  Note that, in Edios, arrays start
+	// at position 0.  Hence, to simulate a 1000000 bp region the start 
+	// position is 0 and the end position is 999999.
+		// uniform chromosome of length 10000 kb 
         initializeGenomicElement(g1, 0, 999999);
         
 	//--------------------//
@@ -44,6 +52,7 @@ initialize() {
 
 // create a population of 10000 individuals
 1 { sim.addSubpop("p1", 10000); }
+// subset the population at generation 43999 to 100 individuals
 43999 {p1.setSubpopulationSize(100); }
 
 // run to generation 44000
