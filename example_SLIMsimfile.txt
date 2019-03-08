@@ -1,0 +1,51 @@
+// set up a simple neutral simulation (see page 45 of manual)
+initialize() {
+    //---------------//
+	// Mutation Rate //
+	//---------------//        
+	//initialize the per-site per-generation mutation rate
+        initializeMutationRate(1e-8);
+                
+	//------------------//
+	// Mutation Type(s) //
+	//------------------//        
+	// If you had different mutation types you would create
+	// multiple mutation types.  However,
+	// since this is a simple simulation with neutral mutations 		
+	//only, we only need the following line which creates a 		
+	//neutral mutation type named "m1"
+        // m1 mutation type: neutral
+        initializeMutationType("m1", 0.5, "f", 0.0);
+
+	//-------------------------//
+	// Genomic Element Type(s) //
+	//-------------------------//
+	// Again, since you want a simple simulation
+	// with one mutation type you only need one type of
+	// genomic element.
+    // g1 genomic element type: uses m1 for all mutations
+        initializeGenomicElementType("g1", m1, 1.0);
+        
+	//-----------------//
+	// Genomic Element //
+	//-----------------//        
+    // HERE IS WHERE YOU SPECIFY THE LENGTH OF THE 
+	// SEGMENT TO SIMULATE, note that in Edios arrays start
+	// at position 0, so subtract one from the total length    
+	// uniform chromosome of length 10000 kb - specify 99999 
+        initializeGenomicElement(g1, 0, 999999);
+        
+	//--------------------//
+	// Recombination Rate //
+	//--------------------//        
+    //set the recombination rate
+        initializeRecombinationRate(1e-8);
+}
+
+// create a population of 10000 individuals
+1 { sim.addSubpop("p1", 10000); }
+43999 {p1.setSubpopulationSize(100); }
+
+// run to generation 44000
+44001 late() { sim.outputFull("example_SLiMout.txt"); }
+ 
